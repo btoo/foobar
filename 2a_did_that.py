@@ -36,7 +36,7 @@ class Minion:
         self.b = b
         self.cycle = OrderedDict()
         self.fill_str = lambda x: str(x).zfill(self.k)
-        self.iteration = iteration(
+        self.iteration = iteration( # type conversions and list functions are inefficient...
             k = self.k,
             to_dec = lambda x: int(str(x), b),
             to_base = to_base_b(b),
