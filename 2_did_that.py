@@ -10,7 +10,6 @@ def iteration(k):
     return iteration_with_k
 
 
-
 class Minion:
 
     def __init__(self, n, b):
@@ -19,21 +18,32 @@ class Minion:
         self.k = len(str(n))
         self.iteration = iteration(self.k)
         self.b = b
+        self.iteration_count = 0
 
     def get_iterations(self, z=None):
         if z is None:
             z = self.n
 
-        if str(z).zfill(self.k) not in self.cycle:
+        z_str = str(z).zfill(self.k)
+        if z_str not in self.cycle:
             xyz = self.iteration(z)
-            self.cycle[str(z).zfill(self.k)] = xyz
-            self.get_iterations(xyz[2])
+            new_z = xyz[2]
+            if z == new_z:
+                # print "answer is 1 because the new z is the same as the last z, causing the cycle to get stuck on this value"
+                # print xyz
+                return 1
+            self.cycle[z_str] = xyz
+            self.iteration_count += 1
+            return self.get_iterations(new_z)
+        else:
+            # print 'last', z_str
+            return self.iteration_count
+
+
+def answer(n, b):
+    minion = Minion(n, b)
+    return minion.get_iterations()
 
 
 
-
-minion = Minion(1211, 10)
-# minion = Minion(999, 10)
-# print(minion.k)
-minion.get_iterations()
-print(minion.cycle)
+answer(1211, 10)
