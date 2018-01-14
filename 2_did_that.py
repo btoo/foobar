@@ -8,13 +8,12 @@ def to_base_b(b):
         while n:
             digits.append(int(n % b))
             n /= b
-        ret = int(''.join(map(str, digits[::-1])))
-        return ret
+        return int(''.join(map(str, digits[::-1])))
     return n_to_base_b
 
-def iteration(k, to_dec, to_base, filled_str):
+def iteration(k, to_dec, to_base, fill_str):
     def iteration_with_constants(n):
-        digits = list(filled_str(n)) # make sure the digits list is the correct length
+        digits = list(fill_str(n)) # make sure the digits list is the correct length
         x_digits = sorted(digits, reverse=True)
         x = int(''.join(x_digits))
         x_dec = to_dec(x)
@@ -36,20 +35,20 @@ class Minion:
         self.k = len(str(n))
         self.b = b
         self.cycle = OrderedDict()
-        self.filled_str = lambda x: str(x).zfill(self.k)
+        self.fill_str = lambda x: str(x).zfill(self.k)
         self.iteration = iteration(
-            k=self.k,
-            to_dec=lambda x: int(str(x), b),
-            to_base=to_base_b(b),
-            filled_str=self.filled_str
+            k = self.k,
+            to_dec = lambda x: int(str(x), b),
+            to_base = to_base_b(b),
+            fill_str = self.fill_str
         )
 
     def get_iterations(self, z=None):
-        if z is None:
+        if z is None: # first iteration
             z = self.n
 
-        z_str = self.filled_str(z)
-        if z_str not in self.cycle:
+        z_str = self.fill_str(z)
+        if z_str not in self.cycle: # a new z has been encountered, so add it to the hashtable
             xyz = self.iteration(z)
             new_z = xyz[2]
             if z == new_z or z == 0:
@@ -60,17 +59,14 @@ class Minion:
                 return 1
             self.cycle[z_str] = xyz
             return self.get_iterations(new_z)
-        else:
+        else: # this hash exists already. we're currently at the end of the cycle, so just look for the its starting point
             return len(self.cycle) - self.cycle.keys().index(z_str)
 
 
 def answer(n, b):
     minion = Minion(n, b)
-    ans = minion.get_iterations()
-    # print minion.cycle
-    return ans
+    return minion.get_iterations()
 
-
-# answer(0, 2)
-# answer(1211, 10)
-# answer(210022, 3)
+answer(0, 2)
+answer(1211, 10)
+answer(210022, 3)
