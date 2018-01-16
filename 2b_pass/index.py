@@ -54,9 +54,9 @@ def compile_answer(first_to_keep):
                     third_to_discard_from
                 )
                 third = insort_into_second(third_to_keep) # third = sorted(second_to_keep + third_to_keep)
-                le_answer = convert_ascending_list_to_descending_int(third)
-                # print le_answer
-                return le_answer
+                compiled_answer = convert_ascending_list_to_descending_int(third)
+                # print compiled_answer
+                return compiled_answer
             return compile_answer3b
         return compile_answer3a
     return compile_answer2
@@ -93,6 +93,7 @@ def answer(digits):
         return convert_ascending_list_to_descending_int(digits)
     
     compile_answer2 = compile_answer(digits0)
+
     if digits_sum_remainder == 1:
         if len(digits1) >= 1:
             compile_answer3a = compile_answer2(digits2)
@@ -102,6 +103,7 @@ def answer(digits):
             compile_answer3a = compile_answer2(digits1)
             compile_answer3b = compile_answer3a(digits2)
             return compile_answer3b(digits2[:2])
+
     if digits_sum_remainder == 2:
         if len(digits2) >= 1:
             compile_answer3a = compile_answer2(digits1)

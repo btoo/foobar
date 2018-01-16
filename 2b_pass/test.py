@@ -8,6 +8,11 @@ class TestCodes(unittest.TestCase):
         self.assertEqual(answer([3, 1, 4, 1]), 4311)
         # self.assertEqual(answer([3, 1, 4, 1, 5, 9]), 94311)
 
+    # sum of digits is already divisible by 3
+    def test_sum_has_remainder_0(self):
+        self.assertEqual(answer([6]), 6)
+        self.assertEqual(answer([6, 3, 8, 8, 2]), 88632)
+
     # sum of digits has remainder 1
     def test_sum_has_remainder_1(self):
         
@@ -32,6 +37,7 @@ class TestCodes(unittest.TestCase):
         
         # remove 2 digits with remainder 1
         self.assertEqual(answer([6, 4, 1, 1, 7]), 7641)
+        self.assertEqual(answer([4, 7, 3, 6]), 63)
 
         # not a single digit with remainder 2 and no two digits with remainder 1, so answer is 0
         self.assertEqual(answer([1]), 0)
@@ -39,11 +45,10 @@ class TestCodes(unittest.TestCase):
         self.assertEqual(answer([7]), 0)
         
 
-    # def test_custom(self):
-    #     # self.assertEqual(answer([6, 3, 4, 7]), 63)
-    #     # self.assertEqual(answer([6, 3, 8, 8, 2]), 63882)
-    #     # self.assertEqual(answer([0]), 0)
-    #     # self.assertEqual(answer([2]), 0)
+    def test_edge_cases(self):
+        self.assertEqual(answer([]), 0)
+        self.assertEqual(answer([0]), 0)
+        self.assertEqual(answer([0, 0]), 0)
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)
