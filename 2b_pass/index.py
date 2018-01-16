@@ -44,9 +44,9 @@ def compile_answer(first_to_keep):
     def compile_answer2(second_to_keep):
         second = insort_into_first(second_to_keep) # second = sorted(first_to_keep + second_to_keep)
         insort_into_second = insort_list(second)
-        # 3. provide the third list of digits (some of these digits (at most 2) will be discarded
+        # 3a. provide the third list of digits (some of these digits (at most 2) will be discarded
         def compile_answer3a(third_to_discard_from):
-            # 4. provide the list of digits to discard from third_to_discard_from
+            # 3b. provide the list of digits to discard from third_to_discard_from
             def compile_answer3b(digits_to_discard):
                 third_to_keep = reduce(
                     discard_digit_from_accumulator,
@@ -55,7 +55,6 @@ def compile_answer(first_to_keep):
                 )
                 third = insort_into_second(third_to_keep) # third = sorted(second_to_keep + third_to_keep)
                 compiled_answer = convert_ascending_list_to_descending_int(third)
-                # print compiled_answer
                 return compiled_answer
             return compile_answer3b
         return compile_answer3a
